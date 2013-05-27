@@ -29,6 +29,27 @@ class Bill
     protected $id;
 
     /**
+     * @var float
+     *
+     * @ORM\Column(type="decimal")
+     */
+    protected $tax_sum;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(type="decimal")
+     */
+    protected $total;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(type="decimal")
+     */
+    protected $sub_total;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="timestamp", type="datetime")
@@ -46,6 +67,11 @@ class Bill
      */
     protected $items;
 
+    public function __construct() {
+        $this->items = new ArrayCollection();
+
+        return $this;
+    }
 
     /**
      * Get id
@@ -55,22 +81,6 @@ class Bill
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * Satisfying CartInterface
-     */
-    public function __construct(array $items=NULL) {
-
-        if(is_array($items)) {
-            $this->items = new ArrayCollection($items);
-        } else {
-            $this->items = new ArrayCollection();
-        } 
-
-        return $this;
     }
 
 
@@ -103,7 +113,7 @@ class Bill
      */
     public function addItem(ItemInterface $item)
     {
-        $this->items->add($item);
+        $this->getItems()->add($item);
 
         return $this;
     }
@@ -115,7 +125,7 @@ class Bill
      */
     public function removeItem(ItemInterface $item)
     {
-        $this->items->removeElement($item);
+        $this->getItems()->removeElement($item);
 
         return $this;
     }
@@ -143,10 +153,66 @@ class Bill
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * Satisfying CartInterface
+     */
+    public function getTotal()
+    {
+        if($this->total === NULL) {
+            $total = $this->getSubtotal() + $this->getTaxSum();
+            $this->total = $total;            
+        }
+
+        return $this->total;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * Satisfying CartInterface
+     */
+    public function setTaxSum($sum)
+    {
+        $this->tax_sum = $sum;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * Satisfying CartInterface
+     */
+    public function getTaxSum()
+    {
+        return $this->tax_sum;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * Satisfying CartInterface
+     */
+    public function getSubtotal()
+    {
+        if($this->sub_total === NULL) {
+            $st = 0;
+            foreach($this->items as $item) {
+                $st = $st + $item->getCost();
+            }
+            $this->sub_total = $st;            
+        }
+
+        return $this->sub_total;
+
+    }
+
+
+    /**
      * @ORM\PrePersist
      *
      * This is executed ONLY during an INSERT
-     * (called 'persist')
      */
     public function prePersistTimestamp()
     {

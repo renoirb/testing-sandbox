@@ -10,11 +10,6 @@ use Acme\Biller\Entity\ItemInterface;
 interface BillInterface 
 {
     /**
-     * Constructor
-     */
-    public function __construct(array $items=NULL);
-
-    /**
      * Set item list
      *
      * @param ArrayCollection $list
@@ -59,5 +54,33 @@ interface BillInterface
      * @return \DateTime 
      */
     public function getTimestamp();
+
+    /**
+     * Get the sum of each item cost
+     *
+     * @return number
+     */
+    public function getSubtotal();
+
+    /**
+     * Get the taxed sum
+     *
+     * @return number
+     */
+    public function getTaxSum();
+
+    /**
+     * Get the sum of tax and cost
+     *
+     * @return number
+     */
+    public function getTotal();
+
+    /**
+     * Set the sum that has been taxed
+     * 
+     * @return BillInterface
+     */
+    public function setTaxSum($sum);
 
 }

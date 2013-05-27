@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 // Forms
-use Acme\BillerBundle\Form\BillType;
+use Acme\Biller\Model\TaxModel;
 
 // Entities
 use Acme\BillerBundle\Entity\ItemTaxable;
@@ -29,13 +29,14 @@ class DemoController extends Controller
     }
 
     /**
-     * @Route("/bill/create", name="demo_bill_create")
+     * @Route("/bill/calculate", name="demo_bill_calculate")
      * @Template()
      */
-    public function billCreateAction()
+    public function billCalculateAction()
     {
-        $cd = new ItemTaxable();
+        $cd = new Item();
         $cd->setCost(14.99);
+        $cd->setTaxable(true);
         $cd->setDescription('music CD');
 
         $book = new Item();
@@ -44,23 +45,16 @@ class DemoController extends Controller
 
         $c = new ItemImported();
         $c->setCost(0.85);
+        $c->setTaxable(true);
         $c->setDescription('Chocolate bar');
 
-        $bill = new Bill(array($cd,$book,$c));
+        $bill = new Bill();
         $bill->addItem($cd);
         $bill->addItem($book);
         $bill->addItem($c);
 
-        $form = $this->createForm(new BillType(), $bill);
+        TaxModel::apply($bill);
 
-        $request = $this->get('request');
-        if ('POST' == $request->getMethod()) {
-            $form->bindRequest($request);
-            if ($form->isValid()) {
-
-            }
-        }
-
-        return array('form' => $form->createView());
+        return array('entity' => $bill);
     }
 }

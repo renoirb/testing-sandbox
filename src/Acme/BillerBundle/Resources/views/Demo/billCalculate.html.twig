@@ -1,0 +1,41 @@
+{% extends "AcmeBillerBundle::layout.html.twig" %}
+
+{% block title 'Calculate a bill' %}
+
+{% block content %}
+    {% if entity is defined %}
+        <table class="table table-hover">
+            <caption>Bill summary</caption>
+            <tbody>
+                {% for item in entity.items %}
+                {% if item.istaxable is sameas(true) %}
+                    {% set taxableNote = '(taxable)' %}
+                {% else %}
+                    {% set taxableNote = '' %}
+                {% endif %}
+                <tr>
+                    <th>{{ item.description}}&nbsp;<small>{{ taxableNote }}</small></th>
+                    <td>$ {{ item.cost|number_format(2) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Sub total</th>
+                    <td><strong>$ {{ entity.subtotal|number_format(2) }}</strong></td>
+                </tr>
+                <tr>
+                    <th>Sales Taxes</th>
+                    <td><strong>$ {{ entity.taxsum|number_format(2) }}</strong></td>
+                </tr>
+                <tr>
+                    <th>Total</th>
+                    <td><strong>$ {{ entity.total|number_format(2) }}</strong></td>
+                </tr>
+            </tfoot>
+        </table>
+        <div class="well">
+            <a href="{{ path('demo_index') }}" class="btn">Back</a>
+        </div>
+    {% endif %}
+{% endblock %}
