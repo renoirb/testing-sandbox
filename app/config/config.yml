@@ -17,6 +17,11 @@ framework:
     session:         ~
     fragments:       ~
 
+twig:
+    form:
+        resources:
+            - 'AcmeBillerBundle::fields.html.twig'
+
 # Doctrine Configuration
 doctrine:
     dbal:

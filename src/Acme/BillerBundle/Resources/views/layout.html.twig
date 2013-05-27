@@ -1,8 +1,8 @@
 {% extends "TwigBundle::layout.html.twig" %}
 
 {% block head %}
-    <link rel="icon" sizes="16x16" href="{{ asset('favicon.ico') }}" />
-    <link rel="stylesheet" href="{{ asset('bundles/acmedemo/css/demo.css') }}" />
+    <script src="http://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.0.6-development-only.js"></script>
+    <link rel="stylesheet" href="{{ asset('min/renoirb.min.css') }}" />
 {% endblock %}
 
 {% block title 'Demo Bundle' %}
@@ -15,7 +15,7 @@
     {% endfor %}
 
     {% block content_header %}
-        <ul id="menu">
+        <ul class="nav">
             {% block content_header_more %}
                 <li><a href="{{ path('demo_index') }}">Demo Home</a></li>
             {% endblock %}

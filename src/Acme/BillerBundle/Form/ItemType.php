@@ -12,6 +12,7 @@ class ItemType extends AbstractType
     {
         // http://symfony.com/doc/2.2/reference/forms/types/money.html
         $costOptions['currency'] = 'CAD';
+        
         $builder->add('cost', 'money', $costOptions);
 
         $builder->add('description', 'text');

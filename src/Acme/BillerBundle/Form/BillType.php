@@ -12,7 +12,14 @@ class BillType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('items', 'collection', array('type' => new ItemType()));
+        $itemsConfig['type'] = new ItemType();
+        $itemsConfig['allow_add'] = true;
+        $itemsConfig['allow_delete'] = true;
+        $itemsConfig['prototype_name'] = '__ITEM_PROTO__';
+
+        $itemsConfig['options']['required'] = false;
+        
+        $builder->add('items', 'collection', $itemsConfig);
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
