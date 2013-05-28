@@ -15,22 +15,22 @@
                 {% endif %}
                 <tr>
                     <th>{{ line.description}}&nbsp;<small>{{ taxableNote }}</small></th>
-                    <td>$ {{ line.cost|number_format(2) }}</td>
+                    <td>$ {{ line.getSalePrice|number_format(2) }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
             <tfoot>
                 <tr>
                     <th>Sub total</th>
-                    <td><strong>$ {{ entity.subtotal|number_format(2) }}</strong></td>
+                    <td><strong>$ {{ entity.getSubtotal|number_format(2) }}</strong></td>
                 </tr>
                 <tr>
                     <th>Sales Taxes</th>
-                    <td><strong>$ {{ entity.taxsum|number_format(2) }}</strong></td>
+                    <td><strong>$ {{ entity.getTaxSum|number_format(2) }}</strong></td>
                 </tr>
                 <tr>
                     <th>Total</th>
-                    <td><strong>$ {{ entity.total|number_format(2) }}</strong></td>
+                    <td><strong>$ {{ entity.getTotal|number_format(2) }}</strong></td>
                 </tr>
             </tfoot>
         </table>

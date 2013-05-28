@@ -57,9 +57,8 @@ class BillController extends Controller
         $book->setCost(12.49);
         $book->setDescription('Book');
 
-        $c = new LineImported();
+        $c = new Line();
         $c->setCost(0.85);
-        $c->setTaxable(true);
         $c->setDescription('Chocolate bar');
 
         $bill = new Bill();

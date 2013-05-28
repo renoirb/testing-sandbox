@@ -17,5 +17,4 @@ namespace Acme\Biller\Entity;
  */
 interface LineImportedInterface 
 {
-
 }

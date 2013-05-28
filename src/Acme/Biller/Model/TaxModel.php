@@ -15,6 +15,7 @@ use Acme\Biller\Entity\LineImportedInterface;
 
 // Exeptions
 use Acme\Biller\Exception\SubtotalNotCalculatedException;
+use Acme\Biller\Exception\SalesTaxNotCalculatedException;
 
 /**
  * Tax Model is about manipulating Lines and calculate taxes
@@ -36,7 +37,7 @@ class TaxModel
      * price of p contains (np/100 rounded up 
      * to the nearest 0.05) amount of sales tax
      */
-    protected static function applyTax(LineInterface $line)
+    protected static function calculateTax(LineInterface $line)
     {
         $tax = 0;
 
@@ -45,37 +46,45 @@ class TaxModel
             $n = self::CURRENT_TAX_RATE;
 
             $tax = round(($n * $p)/100, 2);
-
-            $line->setSalePrice($tax);
         }
 
         return $tax;
     }
 
-    protected static function applyImportTax(LineInterface $line)
+    /**
+     * Apply Import taxes
+     *
+     * @param  LineInterface $line Line to calculate import tax on
+     * 
+     * @return number
+     */
+    protected static function calculateImportTax(LineInterface $line)
     {
         $tax = 0;
 
+        // What can happen is that the sale price
+        // can be
+        //if($line->getSalePrice() === 0 && $line->isTaxable() === TRUE) {
+        //    throw new SalesTaxNotCalculatedException();
+        //}
+
         if($line instanceof LineImportedInterface){
-            $p = ($line->getSalePrice() > 0) ? $line->getSalePrice() : $line->getCost();
+            $p = $line->getCost();
             $n = self::CURRENT_IMPORTED_TAX_RATE;
 
             $tax = round(($n * $p)/100, 2);
-
-            $line->setSalePrice($tax);
         }
 
         return $tax;
     }
 
-    protected static function applySubtotal(BillInterface $bill)
+    protected static function calculateSubtotal(BillInterface $bill)
     {
         $st = 0;
 
         foreach($bill->getLineList() as $line) {
-            $st = $st + $line->getCost();
+            $st += $line->getCost();
         }
-        $bill->setSubTotal($st);
 
         return $st;
     }
@@ -86,7 +95,7 @@ class TaxModel
      *
      * @return number
      */
-    protected static function applyTotal(BillInterface $bill)
+    protected static function calculateTotal(BillInterface $bill)
     {
         if($bill->getSubtotal() === 0) {
             throw new SubtotalNotCalculatedException();
@@ -95,26 +104,32 @@ class TaxModel
         $total = 0;
         $total = $bill->getSubtotal() + $bill->getTaxSum();
 
-        $bill->setTotal($total);
-
         return $total;
     }
 
     public static function apply(BillInterface $bill)
     {
-        $items = $bill->getLineList();
+        $lines = $bill->getLineList();
         $bill_tax_sum = 0;
 
-        self::applySubtotal($bill);
+        $bill->setSubTotal(self::calculateSubtotal($bill));
 
-        foreach($items as $item) {
-            $bill_tax_sum += self::applyTax($item);
-            $bill_tax_sum += self::applyImportTax($item);
+        foreach($lines as $line) {
+            $c = $line->getCost();
+            
+            $sales_tax = self::calculateTax($line);
+
+            $import_tax = self::calculateImportTax($line);
+
+            $line_tax_sum = $import_tax + $sales_tax;
+            $bill_tax_sum += $line_tax_sum;
+
+            $line->setSalePrice($line_tax_sum + $c);
         }
 
         $bill->setTaxSum($bill_tax_sum);
 
-        self::applyTotal($bill);
+        $bill->setTotal(self::calculateTotal($bill));
 
         return $bill;
     }
