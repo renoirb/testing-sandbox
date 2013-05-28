@@ -72,7 +72,7 @@ class Bill
     /**
      * @var ArrayCollection<Line>
      *
-     * @ORM\ManyToMany(targetEntity="\Acme\BillableBundle\AbstractLine")
+     * @ORM\ManyToMany(targetEntity="AbstractLine", cascade={"persist"})
      * @ORM\JoinTable(name="cart_line",
      *      joinColumns={@ORM\JoinColumn(name="cart_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="line_id", referencedColumnName="id")}

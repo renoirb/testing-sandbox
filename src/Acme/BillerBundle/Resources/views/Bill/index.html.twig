@@ -7,6 +7,8 @@
 {% block content %}
     <h1>Available demos</h1>
     <ul id="demo-list">
-        <li><a href="{{ path('bill_calculate') }}">Calculate a bill</a></li>
+        <li><a href="{{ path('bill_calculate', {'u': 1}) }}">Use-case 1</a></li>
+        <li><a href="{{ path('bill_calculate', {'u': 2}) }}">Use-case 2</a></li>
+        <li><a href="{{ path('bill_calculate', {'u': 3}) }}">Use-case 3</a></li>
     </ul>
 {% endblock %}
