@@ -6,5 +6,5 @@
 /vendor/
 /bin/
 /composer.phar
-temp.db
+*.db*
 *.sublime*
