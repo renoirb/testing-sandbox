@@ -34,11 +34,3 @@ doctrine:
     orm:
         auto_generate_proxy_classes: %kernel.debug%
         auto_mapping: true
-
-services:
-    infinite_form.polycollection_type:
-        class: Acme\BillerBundle\Form\Type\PolyCollectionType
-        tags:
-            form_type:
-                name: form.type
-                alias: polycollection
