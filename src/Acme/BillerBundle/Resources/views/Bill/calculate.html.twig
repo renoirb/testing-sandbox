@@ -4,6 +4,7 @@
 
 {% block content %}
     {% if entity is defined %}
+        <h2>Use case <small id="test-hook-id" title="I do not like singletons, but for the cause of unit testing on the frontend side, here it is.">{{ app.request.get('u') }}</small></h2>
         <table class="table table-hover">
             <caption>Bill summary</caption>
             <tbody>
