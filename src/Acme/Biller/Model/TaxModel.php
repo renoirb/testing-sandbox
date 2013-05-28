@@ -45,7 +45,7 @@ class TaxModel
             $p = $line->getCost();
             $n = self::CURRENT_TAX_RATE;
 
-            $tax = round(($n * $p)/100, 2);
+            $tax = round($n * $p/100, 2);
         }
 
         return $tax;
@@ -62,17 +62,11 @@ class TaxModel
     {
         $tax = 0;
 
-        // What can happen is that the sale price
-        // can be
-        //if($line->getSalePrice() === 0 && $line->isTaxable() === TRUE) {
-        //    throw new SalesTaxNotCalculatedException();
-        //}
-
         if($line instanceof LineImportedInterface){
             $p = $line->getCost();
             $n = self::CURRENT_IMPORTED_TAX_RATE;
 
-            $tax = round(($n * $p)/100, 2);
+            $tax = round($n * $p/100, 2);
         }
 
         return $tax;

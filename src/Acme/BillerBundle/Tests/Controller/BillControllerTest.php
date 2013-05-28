@@ -12,6 +12,6 @@ class BillControllerTest extends WebTestCase
 
         $crawler = $client->request('GET', '/bill/calculate?u=1');
 
-        $this->assertEquals(1, $crawler->filter('#test-hook-id:contains("1")')->count());
+        $this->assertEquals(1, $crawler->filter('h2 small:contains("1")')->count());
     }
 }

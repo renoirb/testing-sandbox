@@ -70,6 +70,20 @@ abstract class AbstractLine
      */
     protected $taxable = FALSE;
 
+    public function __construct($cost=NULL, $description=NULL, $taxable=FALSE)
+    {
+        if($cost !== NULL){
+            $this->cost = $cost;
+        }
+
+        if($description !== NULL){
+            $this->description = $description;
+        }
+        $this->taxable = $taxable;
+
+        return $this;
+    }
+
     /**
      * Get id
      *
