@@ -1,0 +1,45 @@
+{# 
+    Just minimal bootstrap form styling 
+
+    http://www.informulate.net/blog/symfony/symfony-form-customization-and-twitter-bootstrap/ 
+
+#}
+{% block form_row %}
+{% spaceless %}
+    <div class="control-group {{ errors|length > 0 ? 'error' : '' }}" {{ block('widget_container_attributes') }}>
+        {{ form_label(form) }}
+        <div class="controls">
+            {{ form_widget(form) }}
+            {{ form_errors(form) }}
+        </div>
+    </div>
+{% endspaceless %}
+{% endblock form_row %}
+
+
+{% block form_errors %}
+{% spaceless %}
+    {% if errors|length > 0 %}
+    <span class="help-inline">
+        {% for error in errors %}
+            {{
+                error.messagePluralization is null
+                    ? error.messageTemplate|trans(error.messageParameters, 'validators')
+                    : error.messageTemplate|transchoice(error.messagePluralization, error.messageParameters, 'validators')
+            }}
+        {% endfor %}
+    </span>
+    {% endif %}
+{% endspaceless %}
+{% endblock form_errors %}
+
+
+{% block form_widget_compound %}
+{% spaceless %}
+        {% if form.parent is empty %}
+            {{ form_errors(form) }}
+        {% endif %}
+        {{ block('form_rows') }}
+        {{ form_rest(form) }}
+{% endspaceless %}
+{% endblock form_widget_compound %}

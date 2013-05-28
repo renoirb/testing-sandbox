@@ -1,0 +1,4 @@
+demo:
+    resource: "@AcmeBillerBundle/Controller/"
+    type:     annotation
+    prefix:   /

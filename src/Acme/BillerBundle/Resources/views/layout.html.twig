@@ -1,0 +1,32 @@
+{% extends "TwigBundle::layout.html.twig" %}
+
+{% block head %}
+    <script src="http://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.0.6-development-only.js"></script>
+    <link rel="stylesheet" href="{{ asset('min/renoirb.min.css') }}" />
+{% endblock %}
+
+{% block title 'Demo Bundle' %}
+
+{% block body %}
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+        <div class="flash-message">
+            <em>Notice</em>: {{ flashMessage }}
+        </div>
+    {% endfor %}
+
+    {% block content_header %}
+        <ul class="nav nav-pills">
+            {% block content_header_more %}
+                <li><a href="{{ path('bill_calculate', {'u': 1}) }}">Use-case 1</a></li>
+                <li><a href="{{ path('bill_calculate', {'u': 2}) }}">Use-case 2</a></li>
+                <li><a href="{{ path('bill_calculate', {'u': 3}) }}">Use-case 3</a></li>
+            {% endblock %}
+        </ul>
+
+        <div style="clear: both"></div>
+    {% endblock %}
+
+    <div class="block">
+        {% block content %}{% endblock %}
+    </div>
+{% endblock %}
