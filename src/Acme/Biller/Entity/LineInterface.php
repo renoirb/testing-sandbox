@@ -1,8 +1,22 @@
 <?php
 
+/**
+ * This file is part of Acme Biller
+ *
+ * @package AcmeBiller
+ */
+
 namespace Acme\Biller\Entity;
 
-interface ItemInterface 
+/**
+ * A line is part of a Bill
+ *
+ * A line represent an InventoryItemInterface
+ * that is applied to one BillInterface
+ *
+ * @author Renoir Boulanger <hello@renoirboulanger.com>
+ */
+interface LineInterface 
 {
     /**
      * Set cost
@@ -19,15 +33,6 @@ interface ItemInterface
      * @return float 
      */
     public function getCost();
-
-    /**
-     * Set description
-     *
-     * @param string $description
-     * 
-     * @return ItemInterface
-     */
-    public function setDescription($description);
 
     /**
      * Get description
@@ -54,9 +59,16 @@ interface ItemInterface
     public function isTaxable();
 
     /**
-     * Return list of tax rates
+     * Set the sale price
      * 
      * @return array of tax
      */
-    public function getTaxRates();
+    public function setSalePrice($price);
+
+    /**
+     * Return the sale price
+     * 
+     * @return array of tax
+     */
+    public function getSalePrice();
 }

@@ -1,31 +1,38 @@
 <?php
 
+/**
+ * This file is part of Acme Biller
+ *
+ * This bundle is meant to bootsrap in a HTTP+HTML 
+ * representation of Acme Biller
+ *
+ * @package AcmeBillerBundle
+ */
+
 namespace Acme\BillerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 // Contracts
-use Acme\Biller\Entity\ItemInterface;
+use Acme\Biller\Entity\LineInterface;
 
 /**
- * Item
- *
- * An item, that is not taxable
+ * Bill Line
  * 
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="discriminator", type="string")
  * @ORM\DiscriminatorMap({
- *     "item" = "Item", 
- *     "imported" = "ItemImported"
+ *     "line" = "Line", 
+ *     "line_imported" = "LineImported"
  * })
  * 
  * @ORM\Entity
+ * 
+ * @author Renoir Boulanger <hello@renoirboulanger.com>
  */
-abstract class AbstractItem
-    implements ItemInterface
+abstract class AbstractLine
+    implements LineInterface
 {
-    const CURRENT_TAX_RATE = 0.10;
-
     /**
      * @var integer
      *
@@ -38,16 +45,23 @@ abstract class AbstractItem
     /**
      * @var float
      *
+     * @ORM\Column(type="decimal")
+     */
+    protected $sale_price = 0;
+
+    /**
+     * @var float
+     *
      * @ORM\Column(name="cost", type="decimal")
      */
-    protected $cost;
+    protected $cost = 0;
 
     /**
      * @var string
      *
      * @ORM\Column(name="description", type="string", length=255)
      */
-    protected $description;
+    protected $description = NULL;
 
     /**
      * @var boolean
@@ -69,7 +83,7 @@ abstract class AbstractItem
     /**
      * {@inheritDoc}
      *
-     * Satisfying ItemInterface
+     * Satisfying LineInterface
      */
     public function setCost($cost)
     {
@@ -81,7 +95,7 @@ abstract class AbstractItem
     /**
      * {@inheritDoc}
      *
-     * Satisfying ItemInterface
+     * Satisfying LineInterface
      */
     public function getCost()
     {
@@ -89,9 +103,7 @@ abstract class AbstractItem
     }
 
     /**
-     * {@inheritDoc}
-     *
-     * Satisfying ItemInterface
+     * Set the description
      */
     public function setDescription($description)
     {
@@ -103,7 +115,7 @@ abstract class AbstractItem
     /**
      * {@inheritDoc}
      *
-     * Satisfying ItemInterface
+     * Satisfying LineInterface
      */
     public function getDescription()
     {
@@ -113,7 +125,7 @@ abstract class AbstractItem
     /**
      * {@inheritDoc}
      *
-     * Satisfying ItemInterface
+     * Satisfying LineInterface
      */
     public function setTaxable($bool)
     {
@@ -125,25 +137,33 @@ abstract class AbstractItem
     /**
      * {@inheritDoc}
      *
-     * Satisfying ItemInterface
+     * Satisfying LineInterface
      */
     public function isTaxable()
     {
         return $this->taxable;
     }
 
+
     /**
      * {@inheritDoc}
      *
-     * Satisfying ItemInterface
+     * Satisfying LineInterface
      */
-    public function getTaxRates()
+    public function setSalePrice($price)
     {
-        $rates = array();
-        if($this->isTaxable()){
-            $rates['sales'] = static::CURRENT_TAX_RATE;
-        }
+        $this->sale_price = $price;
 
-        return $rates;
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * Satisfying LineInterface
+     */
+    public function getSalePrice()
+    {
+        return $this->sale_price;
     }
 }

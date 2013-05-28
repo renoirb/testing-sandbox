@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * This file is part of Acme Biller
+ *
+ * This bundle is meant to bootsrap in a HTTP+HTML 
+ * representation of Acme Biller
+ *
+ * @package AcmeBillerBundle
+ */
+
 namespace Acme\BillerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -7,18 +16,22 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 // Contracts
 use Acme\Biller\Entity\BillInterface;
-use Acme\Biller\Entity\ItemInterface;
+use Acme\Biller\Entity\LineInterface;
 
 /**
- * Bill
+ * A Bill entry
  *
  * @ORM\Table()
  * @ORM\Entity
+ * 
  * @ORM\HasLifecycleCallbacks
+ * 
+ * @author Renoir Boulanger <hello@renoirboulanger.com>
  */
 class Bill
     implements BillInterface
 {
+
     /**
      * @var integer
      *
@@ -57,18 +70,18 @@ class Bill
     protected $timestamp;
 
     /**
-     * @var ArrayCollection<Item>
+     * @var ArrayCollection<Line>
      *
-     * @ORM\ManyToMany(targetEntity="\Acme\BillableBundle\Item")
-     * @ORM\JoinTable(name="cart_item",
+     * @ORM\ManyToMany(targetEntity="\Acme\BillableBundle\AbstractLine")
+     * @ORM\JoinTable(name="cart_line",
      *      joinColumns={@ORM\JoinColumn(name="cart_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="item_id", referencedColumnName="id")}
+     *      inverseJoinColumns={@ORM\JoinColumn(name="line_id", referencedColumnName="id")}
      * )
      */
-    protected $items;
+    protected $lines;
 
     public function __construct() {
-        $this->items = new ArrayCollection();
+        $this->lines = new ArrayCollection();
 
         return $this;
     }
@@ -87,11 +100,11 @@ class Bill
     /**
      * {@inheritDoc}
      *
-     * Satisfying CartInterface
+     * Satisfying BillInterface
      */
-    public function setItems(ArrayCollection $list)
+    public function setLineList(ArrayCollection $list)
     {
-        $this->items = $list;
+        $this->lines = $list;
     
         return $this;
     }
@@ -99,21 +112,21 @@ class Bill
     /**
      * {@inheritDoc}
      *
-     * Satisfying CartInterface
+     * Satisfying BillInterface
      */
-    public function getItems()
+    public function getLineList()
     {
-        return $this->items;
+        return $this->lines;
     }
 
     /**
      * {@inheritDoc}
      *
-     * Satisfying CartInterface
+     * Satisfying BillInterface
      */
-    public function addItem(ItemInterface $item)
+    public function addLine(LineInterface $line)
     {
-        $this->getItems()->add($item);
+        $this->lines->add($line);
 
         return $this;
     }
@@ -121,11 +134,11 @@ class Bill
     /**
      * {@inheritDoc}
      *
-     * Satisfying CartInterface
+     * Satisfying BillInterface
      */
-    public function removeItem(ItemInterface $item)
+    public function removeLine(LineInterface $line)
     {
-        $this->getItems()->removeElement($item);
+        $this->lines->removeElement($line);
 
         return $this;
     }
@@ -133,7 +146,7 @@ class Bill
     /**
      * {@inheritDoc}
      *
-     * Satisfying CartInterface
+     * Satisfying BillInterface
      */
     public function setTimestamp(\DateTime $timestamp)
     {
@@ -145,7 +158,7 @@ class Bill
     /**
      * {@inheritDoc}
      *
-     * Satisfying CartInterface
+     * Satisfying BillInterface
      */
     public function getTimestamp()
     {
@@ -155,22 +168,29 @@ class Bill
     /**
      * {@inheritDoc}
      *
-     * Satisfying CartInterface
+     * Satisfying BillInterface
      */
     public function getTotal()
     {
-        if($this->total === NULL) {
-            $total = $this->getSubtotal() + $this->getTaxSum();
-            $this->total = $total;            
-        }
-
         return $this->total;
     }
 
     /**
      * {@inheritDoc}
      *
-     * Satisfying CartInterface
+     * Satisfying BillInterface
+     */
+    public function setTotal($total)
+    {
+        $this->total = $total;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * Satisfying BillInterface
      */
     public function setTaxSum($sum)
     {
@@ -182,7 +202,7 @@ class Bill
     /**
      * {@inheritDoc}
      *
-     * Satisfying CartInterface
+     * Satisfying BillInterface
      */
     public function getTaxSum()
     {
@@ -192,20 +212,23 @@ class Bill
     /**
      * {@inheritDoc}
      *
-     * Satisfying CartInterface
+     * Satisfying BillInterface
+     */
+    public function setSubtotal($sub_total)
+    {
+        $this->sub_total = $sub_total;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * Satisfying BillInterface
      */
     public function getSubtotal()
     {
-        if($this->sub_total === NULL) {
-            $st = 0;
-            foreach($this->items as $item) {
-                $st = $st + $item->getCost();
-            }
-            $this->sub_total = $st;            
-        }
-
         return $this->sub_total;
-
     }
 
 

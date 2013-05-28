@@ -9,15 +9,22 @@
  * @package AcmeBillerBundle
  */
 
-namespace Acme\BillerBundle;
+namespace Acme\BillerBundle\Entity;
 
-use Symfony\Component\HttpKernel\Bundle\Bundle;
+use Doctrine\ORM\Mapping as ORM;
+
+// Contracts
+use Acme\Biller\Entity\LineInterface;
 
 /**
- * Defining as a Symfony2 bundle
- *
+ * Bill Line
+ * 
+ * @ORM\Entity
+ * 
  * @author Renoir Boulanger <hello@renoirboulanger.com>
  */
-class AcmeBillerBundle extends Bundle
+class Line
+    extends AbstractLine
+    implements LineInterface
 {
 }

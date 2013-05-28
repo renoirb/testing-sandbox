@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * This file is part of Acme Biller
+ *
+ * This bundle is meant to bootsrap in a HTTP+HTML 
+ * representation of Acme Biller
+ *
+ * @package AcmeBillerBundle
+ */
+
 namespace Acme\BillerBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -12,15 +21,20 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Acme\Biller\Model\TaxModel;
 
 // Entities
-use Acme\BillerBundle\Entity\ItemTaxable;
-use Acme\BillerBundle\Entity\ItemImported;
-use Acme\BillerBundle\Entity\Item;
+use Acme\BillerBundle\Entity\LineTaxable;
+use Acme\BillerBundle\Entity\LineImported;
+use Acme\BillerBundle\Entity\Line;
 use Acme\BillerBundle\Entity\Bill;
 
-class DemoController extends Controller
+/**
+ * Controller managing HTTP requests for Acme Biller
+ *
+ * @author Renoir Boulanger <hello@renoirboulanger.com>
+ */
+class BillController extends Controller
 {
     /**
-     * @Route("/", name="demo_index")
+     * @Route("/", name="bill_index")
      * @Template()
      */
     public function indexAction()
@@ -29,29 +43,29 @@ class DemoController extends Controller
     }
 
     /**
-     * @Route("/bill/calculate", name="demo_bill_calculate")
+     * @Route("/bill/calculate", name="bill_calculate")
      * @Template()
      */
-    public function billCalculateAction()
+    public function calculateAction()
     {
-        $cd = new Item();
+        $cd = new Line();
         $cd->setCost(14.99);
         $cd->setTaxable(true);
         $cd->setDescription('music CD');
 
-        $book = new Item();
+        $book = new Line();
         $book->setCost(12.49);
         $book->setDescription('Book');
 
-        $c = new ItemImported();
+        $c = new LineImported();
         $c->setCost(0.85);
         $c->setTaxable(true);
         $c->setDescription('Chocolate bar');
 
         $bill = new Bill();
-        $bill->addItem($cd);
-        $bill->addItem($book);
-        $bill->addItem($c);
+        $bill->addLine($cd);
+        $bill->addLine($book);
+        $bill->addLine($c);
 
         TaxModel::apply($bill);
 

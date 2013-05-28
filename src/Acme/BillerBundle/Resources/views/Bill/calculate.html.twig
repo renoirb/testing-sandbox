@@ -7,15 +7,15 @@
         <table class="table table-hover">
             <caption>Bill summary</caption>
             <tbody>
-                {% for item in entity.items %}
-                {% if item.istaxable is sameas(true) %}
+                {% for line in entity.getLineList %}
+                {% if line.istaxable is sameas(true) %}
                     {% set taxableNote = '(taxable)' %}
                 {% else %}
                     {% set taxableNote = '' %}
                 {% endif %}
                 <tr>
-                    <th>{{ item.description}}&nbsp;<small>{{ taxableNote }}</small></th>
-                    <td>$ {{ item.cost|number_format(2) }}</td>
+                    <th>{{ line.description}}&nbsp;<small>{{ taxableNote }}</small></th>
+                    <td>$ {{ line.cost|number_format(2) }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
@@ -35,7 +35,7 @@
             </tfoot>
         </table>
         <div class="well">
-            <a href="{{ path('demo_index') }}" class="btn">Back</a>
+            <a href="{{ path('bill_index') }}" class="btn">Back</a>
         </div>
     {% endif %}
 {% endblock %}
