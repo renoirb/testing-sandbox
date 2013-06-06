@@ -1,7 +1,0 @@
-parameters:
-    # DEMO ONLY, TEMPORARY DATABASE
-    database_user:     teksystems
-    database_password: teksystems
-
-    locale:            en
-    secret:            'j3I3jNMa33SAD'
