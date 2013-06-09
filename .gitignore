@@ -7,3 +7,6 @@ bin/*
 
 # Environment specific files
 phpunit.xml
+
+# Documentation files
+*.asta.bak
