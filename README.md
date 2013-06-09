@@ -1,21 +1,12 @@
 testing-sandbox
 ===============
 
+Upcoming library to provide Billing functionality to any PSR compliant project.
+
+Current state:
 A practice sandbox on the theme of a billing system. Pushing testing, separation of concerns, and modeling.
 
-IMPORTANT: This code is not ready for usage, unless you want to practice too.
-
-ALSO
-====
-
-If you have PHP 5.4 installed, you can run the development server 
-by running:
-
-    app/console server:run 127.0.0.1:8080
-
-Open a web browser at: 
-
-    http://127.0.0.1:8080/app.php/
+**IMPORTANT**: This code is not ready for usage yet.
 
 
 INSTALLING
@@ -27,6 +18,24 @@ INSTALLING
 
     php composer.phar --dev install
 
+3. Adjust `phpunit.xml` file
+
+    cp phpunit.xml.dist phpunit.xml
+
 3. Execute testing:
 
-    bin/phpunit -c app/phpunit.xml
+    bin/phpunit
+
+
+
+SCOPE
+=====
+
+The scope of this project is to deliver the following:
+
+*  Provide structure to implement billing system
+*  Provide utilities to convert items from an inventory, and create a bill statement based on them
+*  Provide mechanism to calculate taxes, and also support compound taxes
+*  Provide base entity class for Tax, InventoryItem, Bill, (Bill) Line
+*  Provide event based hooks to add your own logic on top of the provided system
+
