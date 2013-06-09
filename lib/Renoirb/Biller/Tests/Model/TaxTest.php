@@ -23,19 +23,15 @@ use Renoirb\Biller\Entity\Tax;
 use Renoirb\Biller\Model\Tax as TaxModel;
 
 // Exeptions
-use Renoirb\Biller\Exception\SubtotalNotCalculatedException;
 use Renoirb\Biller\Exception\SalesTaxNotCalculatedException;
 
 /**
  * Test Tax Model
- *
- * This class will need big refactor, lots of
- * duplicated code.
  * 
  * @author Renoir Boulanger <hello@renoirboulanger.com>
  */
 class TaxTest
-    extends \PHPUnit_Framework_TestCase
+    extends BillerTestCase
 {
     const TAX_1_RATE = 5;
     const TAX_2_RATE = 10;

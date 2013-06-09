@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * This file is part of Renoirb Biller
+ *
+ * @package RenoirbBiller
+ */
+
 namespace Renoirb\Biller\Event;
 
 // Contracts
@@ -8,6 +14,11 @@ use Symfony\Component\EventDispatcher\Event;
 // Entities
 use Renoirb\Biller\BillInterface;
 
+/**
+ * A Bill event
+ * 
+ * @author Renoir Boulanger <hello@renoirboulanger.com>
+ */
 class BillEvent
     extends Event
 {

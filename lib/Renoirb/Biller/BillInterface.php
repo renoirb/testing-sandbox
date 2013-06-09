@@ -15,7 +15,10 @@ use Renoirb\Biller\LineInterface;
 /**
  * A bill is an entry describing a sale
  *
- * Each line has tax and rates applied to it
+ * Each LineInterface (line) has a sale price, that is calculated
+ * from his originating InventoryInterface (item) own cost value.
+ *
+ * Each item should know what are the applicable taxes to itself.
  *
  * @author Renoir Boulanger <hello@renoirboulanger.com>
  */

@@ -16,13 +16,13 @@ use Renoirb\Biller\LineInterface;
 
 // Exeptions
 use Renoirb\Biller\Exception\SubtotalNotCalculatedException;
-use Renoirb\Biller\Exception\SalesTaxNotCalculatedException;
 use Renoirb\Biller\Exception\DivisionByZeroException;
 
 /**
- * Tax Model is about manipulating Lines and calculate taxes
+ * Tax Model
  * 
- * Each line has tax and rates applied to it
+ * Manipulations made on a Bill to calculate
+ * taxes applicable on each Line.
  *
  * @author Renoir Boulanger <hello@renoirboulanger.com>
  */
