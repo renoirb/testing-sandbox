@@ -12,7 +12,6 @@ namespace Renoirb\Biller\Model;
 use Renoirb\Biller\BillInterface;
 use Renoirb\Biller\InventoryItemInterface;
 use Renoirb\Biller\TaxInterface;
-use Renoirb\Biller\LineInterface;
 
 // Exeptions
 use Renoirb\Biller\Exception\SubtotalNotCalculatedException;

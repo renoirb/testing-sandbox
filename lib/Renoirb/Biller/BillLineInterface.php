@@ -16,7 +16,7 @@ namespace Renoirb\Biller;
  *
  * @author Renoir Boulanger <hello@renoirboulanger.com>
  */
-interface LineInterface 
+interface BillLineInterface 
 {
     /**
      * Get description

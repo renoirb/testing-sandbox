@@ -10,15 +10,13 @@ namespace Renoirb\Biller;
 
 // Contracts
 use Doctrine\Common\Collections\ArrayCollection;
-use Renoirb\Biller\LineInterface;
+use Renoirb\Biller\BillLineInterface;
 
 /**
  * A bill is an entry describing a sale
  *
- * Each LineInterface (line) has a sale price, that is calculated
- * from his originating InventoryInterface (item) own cost value.
- *
- * Each item should know what are the applicable taxes to itself.
+ * A `BillInterface` ("bill") *has many* `BillLineInterface` ("line"). Each line
+ * has a a sale price attribute.
  *
  * @author Renoir Boulanger <hello@renoirboulanger.com>
  */
@@ -38,7 +36,7 @@ interface BillInterface
      * 
      * A line is an item on a Bill
      *
-     * @return ArrayCollection<LineInterface>
+     * @return ArrayCollection<BillLineInterface>
      */
     public function getLineList();
 
@@ -47,14 +45,14 @@ interface BillInterface
      *
      * @return BillInterface
      */
-    public function addLine(LineInterface $line);
+    public function addLine(BillLineInterface $line);
 
     /**
      * Remove a line in the current bill
      *
      * @return BillInterface
      */
-    public function removeLine(LineInterface $line);
+    public function removeLine(BillLineInterface $line);
 
     /**
      * Get timestamp

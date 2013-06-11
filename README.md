@@ -27,6 +27,23 @@ INSTALLING
     bin/phpunit
 
 
+USE IN A PROJECT
+================
+
+Edit your project's `composer.json` file with the following configurations:
+
+```composer.json
+        "require": {
+            "renoirb/testing-sandbox": "dev-master",
+        },
+        "repositories": [
+            {
+                "type": "vcs",
+                "url": "git@github.com:renoirb/testing-sandbox.git"
+            }
+        ]
+```
+
 
 SCOPE
 =====

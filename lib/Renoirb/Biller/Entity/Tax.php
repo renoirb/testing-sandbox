@@ -11,6 +11,16 @@ namespace Renoirb\Biller\Entity;
 // Contract 
 use Renoirb\Biller\TaxInterface;
 
+/**
+ * A Tax
+ * 
+ * Can be used as an entity base, or using DiC.
+ * 
+ * To use in a Bundle, you can extend this class and replicate
+ * the properties with proper Doctrine2 annotations.
+ * 
+ * @author Renoir Boulanger <hello@renoirboulanger.com>
+ */
 class Tax
     implements TaxInterface
 {
@@ -53,6 +63,29 @@ class Tax
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set Tax name
+     */
+    public function setName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Constructor function
+     */
+    public function __construct($rate = NULL, $name = NULL)
+    {
+        if($name !== NULL) {
+            $this->name = $name;
+        }
+        if($rate !== NULL) {
+            $this->rate = $rate;
+        }
+
+        return $this;
     }
 
     /**

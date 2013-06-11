@@ -9,16 +9,21 @@
 namespace Renoirb\Biller\Entity;
 
 // Contracts
-use Renoirb\Biller\LineInterface;
+use Renoirb\Biller\BillLineInterface;
 use Renoirb\Biller\InventoryItemInterface;
 
 /**
  * Bill Line
+ *
+ * A Bill line base entity.
+ *
+ * To use in a Bundle, you can extend this class and replicate
+ * the properties with proper Doctrine2 annotations.
  * 
  * @author Renoir Boulanger <hello@renoirboulanger.com>
  */
-class Line
-    implements LineInterface
+class BillLine
+    implements BillLineInterface
 {
 
     /** 
@@ -31,11 +36,40 @@ class Line
      */
     protected $description = NULL;
 
+    /**
+     * Quantity
+     * 
+     * @var integer
+     */
+    protected $qty;
+
     public function __construct(InventoryItemInterface $item = NULL)
     {
         if($item !== NULL){
             $this->setDescription($item->getDescription());            
         }
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * Satisfies InventoryItemInterface
+     */
+    public function getQuantity()
+    {
+        return $this->qty;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * Satisfies InventoryItemInterface
+     */
+    public function setQuantity($qty)
+    {
+        $this->qty = $qty;
 
         return $this;
     }
@@ -53,7 +87,7 @@ class Line
     /**
      * {@inheritDoc}
      *
-     * Satisfying LineInterface
+     * Satisfying BillLineInterface
      */
     public function getDescription()
     {
@@ -64,7 +98,7 @@ class Line
     /**
      * {@inheritDoc}
      *
-     * Satisfying LineInterface
+     * Satisfying BillLineInterface
      */
     public function setSalePrice($price)
     {
@@ -76,7 +110,7 @@ class Line
     /**
      * {@inheritDoc}
      *
-     * Satisfying LineInterface
+     * Satisfying BillLineInterface
      */
     public function getSalePrice()
     {

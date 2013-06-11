@@ -48,6 +48,20 @@ interface InventoryItemInterface
     public function removeTax(TaxInterface $tax);
 
     /**
+     * How many items of the same in the inventory
+     * 
+     * @return InventoryItemInterface
+     */
+    public function setQuantity($qty);
+
+    /**
+     * How many items of the same in the inventory
+     * 
+     * @return integer
+     */
+    public function getQuantity();
+
+    /**
      * Get inventory description
      * 
      * @return string

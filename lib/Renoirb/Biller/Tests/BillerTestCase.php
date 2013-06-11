@@ -6,7 +6,7 @@
  * @package RenoirbBiller
  */
 
-namespace Renoirb\Biller\Tests\Model;
+namespace Renoirb\Biller\Tests;
 
 /**
  * Biller test cases

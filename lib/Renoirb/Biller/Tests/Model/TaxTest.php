@@ -10,14 +10,16 @@ namespace Renoirb\Biller\Tests\Model;
 
 // Entities
 use Renoirb\Biller\Entity\BillInterface;
-use Renoirb\Biller\Entity\LineInterface;
 use Renoirb\Biller\Entity\LineImportedInterface;
 
-// Specific
-use Renoirb\Biller\Entity\Line;
-use Renoirb\Biller\Entity\InventoryItem;
+// Entities
 use Renoirb\Biller\Entity\Bill;
+use Renoirb\Biller\Entity\BillLine;
+use Renoirb\Biller\Entity\InventoryItem;
 use Renoirb\Biller\Entity\Tax;
+
+// Specific
+use Renoirb\Biller\Tests\BillerTestCase;
 
 // Model to test
 use Renoirb\Biller\Model\Tax as TaxModel;
@@ -78,8 +80,7 @@ class TaxTest
         $amt = 10;
         $expected = 1;
 
-        $taxTenPercent = new Tax;
-        $taxTenPercent->setRate(10);
+        $taxTenPercent = new Tax(10, 'TPS');
 
         $item = new InventoryItem;
         $item->setCost($amt);
@@ -100,11 +101,9 @@ class TaxTest
 
         $message = 'Something costing 1$ that has two taxes at 20 and 5 percent, non compounded, should have a tax amount of 0.25';
 
-        $taxA = new Tax;
-        $taxA->setRate(20);
+        $taxA = new Tax(20, 'TPS');
 
-        $taxB = new Tax;
-        $taxB->setRate(5);
+        $taxB = new Tax(5, 'TVQ');
 
         $item = new InventoryItem;
         $item->setCost(1);
@@ -125,7 +124,7 @@ class TaxTest
 
         $bill = new Bill;
 
-        $item = new Line;
+        $item = new BillLine;
         $item->setSalePrice(1);
 
         $bill->addLine($item);

@@ -12,7 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 // Contracts
 use Renoirb\Biller\BillInterface;
-use Renoirb\Biller\LineInterface;
+use Renoirb\Biller\BillLineInterface;
 
 /**
  * A Bill entry
@@ -49,7 +49,7 @@ class Bill
     protected $timestamp;
 
     /**
-     * @var ArrayCollection<LineInterface>
+     * @var ArrayCollection<BillLineInterface>
      */
     protected $lines;
 
@@ -87,7 +87,7 @@ class Bill
      *
      * Satisfying BillInterface
      */
-    public function addLine(LineInterface $line)
+    public function addLine(BillLineInterface $line)
     {
         $this->lines->add($line);
 
@@ -99,7 +99,7 @@ class Bill
      *
      * Satisfying BillInterface
      */
-    public function removeLine(LineInterface $line)
+    public function removeLine(BillLineInterface $line)
     {
         $this->lines->removeElement($line);
 

@@ -47,6 +47,13 @@ class InventoryItem
     protected $cost;
 
     /**
+     * Quantity
+     * 
+     * @var integer
+     */
+    protected $qty;
+
+    /**
      * @var ArrayCollection<TaxInterface>
      */
     protected $taxes;
@@ -95,6 +102,28 @@ class InventoryItem
     public function removeTax(TaxInterface $tax)
     {
         return $this->taxes->removeElement($tax);
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * Satisfies InventoryItemInterface
+     */
+    public function getQuantity()
+    {
+        return $this->qty;
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * Satisfies InventoryItemInterface
+     */
+    public function setQuantity($qty)
+    {
+        $this->qty = $qty;
+
+        return $this;
     }
 
     /**
