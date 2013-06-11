@@ -65,8 +65,8 @@ class TaxFactoryTest
         $tax = $this->taxFactory->create(6,$tested_name);
         $tax2 = $this->taxFactory->get($tested_name);
 
-        $message1 = 'Calling an already created tax would give the same instance';
-        $this->assertEquals($tax, $tax2, $message2);
+        $msg = 'Calling an already created tax would give the same instance';
+        $this->assertEquals($tax, $tax2, $msg);
     }
 
     /**
@@ -79,10 +79,29 @@ class TaxFactoryTest
         // see create $expected_rate property
         $expected_previously_set_rate = 5; 
 
-        $tax = $this->taxFactory->get($tested_name);
+        $tax = $this->taxFactory->create(7, 'my über Tax naMe');
 
         $message3 = 'Changing the rate of an instance, should also affect others from the same type';
-        $tax2->setRate(4);
-        $this->assertEquals($tax->getRate(), $expected_previously_set_rate, $message3);
+        $tax->setRate(4);
+
+        $tax2 = $this->taxFactory->get('my über Tax naMe');
+        $this->assertEquals($tax->getRate(), $tax2->getRate(), $message3);
+    }
+
+    /**
+     * @test
+     * @depends changeRate
+     */
+    public function checkIfPreviouslySetNameExists()
+    {
+        $tested_name = 'my über Tax naMe';
+        $tested_name_should_look = 'my-über-tax-name';
+
+        $method = self::getTaxFactoryMethod('makeSlug');
+        $slug = $method->invokeArgs($this->taxFactory, array($tested_name));
+        
+        $message = 'Check if previously set name exists with place holder we would expect';
+
+        $this->assertEquals($tested_name_should_look, $slug, $message);
     }
 }

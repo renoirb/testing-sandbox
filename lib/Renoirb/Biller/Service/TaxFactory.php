@@ -19,7 +19,7 @@ class TaxFactory
 
     protected function makeSlug($name)
     {
-        return mb_ereg_replace('/[\h\.\r\t]/', '-', strtolower($name));
+        return mb_ereg_replace('/+[\h\.\r\t\ ]/', '-', strtolower($name));
     }
 
     public function get($name)
