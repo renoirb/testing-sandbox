@@ -19,7 +19,11 @@ class TaxFactory
 
     protected function makeSlug($name)
     {
-        return mb_ereg_replace('/+[\h\.\r\t\ ]/', '-', strtolower($name));
+        // mb_ereg_replace do NOT have same pattern format as ereg_replace
+        // we do not need to put separators -_-;
+        // http://php.net/manual/en/function.mb-ereg-replace.php#101615
+        $name = mb_ereg_replace('[\.\s\t ]', '-', mb_strtolower(stripslashes($name), 'UTF-8'));
+        return trim($name);
     }
 
     public function get($name)
@@ -28,7 +32,7 @@ class TaxFactory
         
         if(array_key_exists($slug, $this->taxes) === FALSE)
         {
-            throw \RuntimeException("Tax {$name} is not registered");
+            throw new \RuntimeException("Tax '{$name}' is not registered");
         }
 
         return $this->taxes[$slug];
@@ -46,9 +50,8 @@ class TaxFactory
     {
         if(array_key_exists($slug, $this->taxes) === TRUE)
         {
-            throw \RuntimeException("Tax {$name} already created, please use get method instead");
+            throw new \RuntimeException("Tax '{$name}' already created, please use get method instead");
         }
-
 
         $tax = new Tax($rate, $name);
 

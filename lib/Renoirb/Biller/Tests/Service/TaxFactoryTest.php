@@ -90,18 +90,17 @@ class TaxFactoryTest
 
     /**
      * @test
-     * @depends changeRate
      */
-    public function checkIfPreviouslySetNameExists()
+    public function checkNameReplacementOne()
     {
-        $tested_name = 'my über Tax naMe';
-        $tested_name_should_look = 'my-über-tax-name';
+        $tested_name = 'My.über Tax naMe';
+        $expected = 'my-über-tax-name';
 
         $method = self::getTaxFactoryMethod('makeSlug');
-        $slug = $method->invokeArgs($this->taxFactory, array($tested_name));
+        $actual = $method->invokeArgs($this->taxFactory, array($tested_name));
         
         $message = 'Check if previously set name exists with place holder we would expect';
 
-        $this->assertEquals($tested_name_should_look, $slug, $message);
+        $this->assertEquals($expected, $actual, $message);
     }
 }
