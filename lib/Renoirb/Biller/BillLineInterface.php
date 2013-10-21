@@ -16,26 +16,26 @@ namespace Renoirb\Biller;
  *
  * @author Renoir Boulanger <hello@renoirboulanger.com>
  */
-interface BillLineInterface 
+interface BillLineInterface
 {
     /**
      * Get description
      *
-     * @return string 
+     * @return string
      */
     public function getDescription();
 
     /**
      * Set the sale price
-     * 
-     * @return array of tax
+     *
+     * @return BillLineInterface
      */
     public function setSalePrice($price);
 
     /**
      * Return the sale price
-     * 
-     * @return array of tax
+     *
+     * @return float
      */
     public function getSalePrice();
 }

@@ -2,6 +2,7 @@
     "name": "renoirb/testing-sandbox",
     "version": "0.1",
     "description": "Sandbox project for Renoir Boulanger",
+    "license": "MIT",
     "authors": [
         {
             "name": "Renoir Boulanger",
@@ -14,8 +15,7 @@
     },
     "require": {
         "php": ">=5.3.3",
-        "doctrine/orm": "~2.3",
-        "symfony/event-dispatcher": "~2.3"
+        "doctrine/orm": "~2.3"
     },
     "require-dev": {
         "phpunit/phpunit": "3.7.5",
